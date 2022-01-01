@@ -6,7 +6,8 @@ const base_style = StyleSheet.create({
         marginTop: 10,
         borderRadius: 25,
         alignItems: "center",
-        alignSelf: "center"
+        alignSelf: "center",
+        opacity: 1,
     },
     title: {
         fontWeight: "bold",
