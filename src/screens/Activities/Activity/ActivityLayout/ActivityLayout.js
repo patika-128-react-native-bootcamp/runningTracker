@@ -6,22 +6,22 @@ import { Timer } from 'react-native-element-timer';
 
 import MapView, { PROVIDER_GOOGLE, Marker, LatLng, Polyline } from 'react-native-maps';
 
-export default function ActivityLayout({ coords, loading, handleStart, handleFinish, timerRef, handleTimer }) {
+export default function ActivityLayout({ coords, loading, handleStart, handleFinish, timerRef, handleTimer, initial }) {
     console.log(coords)
     return (
         <View style={styles.container}>
-            {loading ?
+
                 <MapView
                     style={{ flex: 1 }}
                     provider={PROVIDER_GOOGLE}
                     initialRegion={{
-                        latitude: coords[0].latitude,
-                        longitude: coords[0].longitude,
+                        latitude: initial.latitude,
+                        longitude: initial.longitude,
                         latitudeDelta: 0.1,
                         longitudeDelta: 0.1,
                     }}
                 >
-                    <Marker coordinate={coords[0]} />
+                <Marker coordinate={initial} />
                     <Polyline
                         coordinates={coords}
                         strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
@@ -36,8 +36,8 @@ export default function ActivityLayout({ coords, loading, handleStart, handleFin
                         strokeWidth={6}
                     />
 
-                </MapView> :
-                <ActivityIndicator />}
+            </MapView> 
+
             <Timer
                 ref={timerRef}
                 style={styles.timer}

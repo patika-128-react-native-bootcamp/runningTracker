@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, ActivityIndicator } from 'react-native'
 
 import Geolocation from '@react-native-community/geolocation';
 
@@ -12,25 +12,39 @@ export default function Activity() {
 
 
     const [coords, setCoords] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [coord, setCoord] = useState({
+        latitude: 0,
+        longitude: 0,
+    });
+    const [loading, setLoading] = useState(true);
+    const [initial, setInitial] = useState({
+        latitude: 0,
+        longitude: 0,
+    })
 
-    const handleCoordination = (c) => {
-        setCoords([...coords, {
-            latitude: c.coords.latitude,
-            longitude: c.coords.longitude,
-        }]);
 
-
-    };
     const getPosition = () => {
         Geolocation.getCurrentPosition(
-            (c) => handleCoordination(c),
+            (c) => {
+                setCoord({
+                    latitude: c.coords.latitude,
+                    longitude: c.coords.longitude,
+                });
+
+            },
 
             (error) => console.log(error),
+
             {
+                accuracy: {
+                    android: "high",
+                },
                 enableHighAccuracy: true,
-            },
+
+
+            }
         );
+
     }
 
     const handleStart = () => {
@@ -41,7 +55,7 @@ export default function Activity() {
     }
     const handleTimer = (t) => {
         console.log(t)
-        if (t % 10 == 0) {
+        if (t % 5 == 0) {
             getPosition()
         }
     }
@@ -49,8 +63,15 @@ export default function Activity() {
     useEffect(() => {
         Geolocation.getCurrentPosition(
             (c) => {
-                handleCoordination(c);
-                setLoading(true)
+                setInitial({
+                    latitude: c.coords.latitude,
+                    longitude: c.coords.longitude,
+                })
+                setCoords([{
+                    latitude: c.coords.latitude,
+                    longitude: c.coords.longitude,
+                }])
+                setLoading(false)
             },
 
             (error) => console.log(error),
@@ -60,6 +81,17 @@ export default function Activity() {
         );
     }, [])
 
+    useEffect(() => {
+        if (coord.latitude != 0) {
+
+            setCoords([...coords, coord])
+        }
+    }, [coord])
+
+    if (loading) {
+        return <ActivityIndicator />
+    }
+
     return (
         <ActivityLayout
             coords={coords}
@@ -68,6 +100,8 @@ export default function Activity() {
             handleFinish={handleFinish}
             timerRef={timerRef}
             handleTimer={handleTimer}
+            initial={initial}
+            coord={coord}
         />
     )
 }
