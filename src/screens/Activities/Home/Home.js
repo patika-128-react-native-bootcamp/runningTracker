@@ -7,7 +7,7 @@ import auth from "@react-native-firebase/auth";
 export default function Home({ navigation }) {
     const user = auth().currentUser;
 
-    const [userVar, setUserVar] = React.useState(false)
+
     function handleSignOut() {
         auth()
             .signOut()
@@ -15,6 +15,6 @@ export default function Home({ navigation }) {
     }
 
     return (
-        <HomeLayout userName={user} signOut={handleSignOut} navigation={navigation} uservar={userVar} setUserVar={setUserVar} />
+        <HomeLayout userName={user} signOut={handleSignOut} navigation={navigation} />
     )
 }

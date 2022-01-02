@@ -6,7 +6,7 @@ import { Timer } from 'react-native-element-timer';
 
 import MapView, { PROVIDER_GOOGLE, Marker, LatLng, Polyline } from 'react-native-maps';
 
-export default function ActivityLayout({ coords, loading, handleStart, handleFinish, timerRef, handleTimer, initial }) {
+export default function ActivityLayout({ coords, handleStart, handleFinish, timerRef, handleTimer, initial, currentLocation }) {
     console.log(coords)
     return (
         <View style={styles.container}>
@@ -21,7 +21,7 @@ export default function ActivityLayout({ coords, loading, handleStart, handleFin
                         longitudeDelta: 0.1,
                     }}
                 >
-                <Marker coordinate={initial} />
+                <Marker coordinate={currentLocation} />
                     <Polyline
                         coordinates={coords}
                         strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
@@ -29,9 +29,6 @@ export default function ActivityLayout({ coords, loading, handleStart, handleFin
                             '#7F0000',
                             '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
                             '#B24112',
-                            '#E5845C',
-                            '#238C23',
-                            '#7F0000'
                         ]}
                         strokeWidth={6}
                     />

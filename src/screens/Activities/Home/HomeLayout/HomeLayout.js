@@ -14,7 +14,6 @@ export default function HomeLayout({ userName, signOut, navigation, uservar, set
                 <Text style={styles.title}>
                     {userName.displayName}
                 </Text>
-                <Text style={styles.title}>{uservar}</Text>
             </View>
 
             <Button title="Go Activity" onPress={() => navigation.navigate("Activity")} />
