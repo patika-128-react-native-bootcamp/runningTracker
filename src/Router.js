@@ -8,12 +8,14 @@ import Login from './screens/Auth/Login';
 import Sign from './screens/Auth/Sign';
 import ForgetPassword from './screens/Auth/ForgetPassword';
 
-//import Splash from './screens/Splash';
-import Activity from './screens/Activities/Activity';
+import NewActivity from './screens/Activities/NewActivity';
 import Home from './screens/Activities/Home';
 import LeaderBoard from './screens/Activities/LeaderBoard';
 
 import auth from "@react-native-firebase/auth"
+
+import SplashScreen from 'react-native-splash-screen'
+
 
 const Stack = createNativeStackNavigator();
 
@@ -26,9 +28,11 @@ function App() {
                 if (users) {
                     console.log("user var")
                     setUser(true)
+                    SplashScreen.hide();
                 } else {
                     console.log("yok")
                     setUser(false)
+                    SplashScreen.hide();
                 }
         })
     }, [])
@@ -47,7 +51,7 @@ function App() {
             ) : (
                 <Stack.Navigator screenOptions={{ headerShown: false }}>
                         <Stack.Screen name="Home" component={Home} />
-                        <Stack.Screen name="Activity" component={Activity} />
+                        <Stack.Screen name="NewActivity" component={NewActivity} />
                         <Stack.Screen name="LeaderBoard" component={LeaderBoard} />
                 </Stack.Navigator>
             )
