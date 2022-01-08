@@ -8,13 +8,13 @@ import Geolocation from '@react-native-community/geolocation';
 
 import countDistance from "../../../services/countDistance"
 
-import useFetch from "../../../hooks/useFetch";
-
+import axios from "axios"
 export default function Activity() {
 
     const timerRef = useRef(null);
     const base = "https://api.openweathermap.org/data/2.5/weather?";
     const key = "3ddfa2bc4b532c1cd5f12c113b3dd8d6";
+    const [weatherData, setWeatherData] = useState()
     const [currentLocation, setCurrentLocation] = useState({
         latitude: 0,
         longitude: 0,
@@ -29,6 +29,7 @@ export default function Activity() {
 
     const [loading, setLoading] = useState(true);
     const [status, setStatus] = useState(false);
+    const [error, setError] = useState(false);
 
     const getPosition = (t) => {
         Geolocation.getCurrentPosition(
@@ -40,7 +41,7 @@ export default function Activity() {
                 });
 
             },
-            (error) => console.log(error),
+            (error) => setError(error),
             {
                 accuracy: {
                     android: "high",
@@ -79,40 +80,18 @@ export default function Activity() {
     };
     console.log("console", allData)
 
-    //first coordinates taken
-    useEffect(() => {
-        Geolocation.getCurrentPosition(
-            (c) => {
-                setAllData({
-                    allCoords: [{
-                        latitude: c.coords.latitude,
-                        longitude: c.coords.longitude,
-                    }],
-                    distance: 0,
-                    time: 0,
-                    speed: 0
-                })
-                setCurrentLocation({
-                    latitude: c.coords.latitude,
-                    longitude: c.coords.longitude,
-                    time: 0
-                })
+    const fetchData = async (latitude, longitude) => {
+        try {
+            const { data } = await axios.get(`${base}lat=${latitude}&lon=${longitude}&appid=${key}&units=metric`);
+            setWeatherData(data);
+            setLoading(false)
+        } catch (error) {
+            setError(error.message);
 
-                // const {
-                //     loading: loadingWeather,
-                //     error: errorWeather,
-                //     data: dataWeather
-                // } = useFetch(`${base}lat=${c.coords.latitude}&lon=${c.coords.longitude}&appid=${key}`);
-                setLoading(false)
-            },
-            (error) => console.log(error),
-            {
-                enableHighAccuracy: true,
-            },
-        );
-    }, []);
-
-    // when current location taken set this into allData with useEffect, I used this way beacause when I set it in geolocation function, I get some errors
+        }
+    };
+    // when current location taken set this into allData with useEffect, 
+    //I used this way beacause when I set it in geolocation function, I got some errors
     useEffect(() => {
         const length = allData.allCoords.length - 1
         const speed = allData.time > 0 ? allData.distance / allData.time : 0
@@ -131,9 +110,44 @@ export default function Activity() {
         }
     }, [currentLocation])
 
+    //first coordinates taken
+    useEffect(() => {
+        Geolocation.getCurrentPosition(
+            (c) => {
+                setAllData({
+                    allCoords: [{
+                        latitude: c.coords.latitude,
+                        longitude: c.coords.longitude,
+                    }],
+                    distance: 0,
+                    time: 0,
+                    speed: 0
+                })
+                setCurrentLocation({
+                    latitude: c.coords.latitude,
+                    longitude: c.coords.longitude,
+                    time: 0
+                })
+                fetchData(c.coords.latitude, c.coords.longitude)
+            },
+            (error) => setError(error),
+            {
+                enableHighAccuracy: true,
+            },
+        );
+    }, []);
+
+    console.log("weatherData", weatherData)
     if (loading) {
         return <ActivityIndicator />
     };
+    if (error) {
+        return (
+            <View>
+                <Text>Error</Text>
+            </View>
+        )
+    }
 
     return (
         <ActivityLayout
@@ -146,6 +160,7 @@ export default function Activity() {
             currentLocation={currentLocation}
             allData={allData}
             handleEnd={handleEnd}
+            weatherData={weatherData}
         />
     )
 }
