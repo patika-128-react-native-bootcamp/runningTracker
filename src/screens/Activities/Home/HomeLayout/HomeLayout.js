@@ -4,7 +4,7 @@ import { View, Text } from 'react-native'
 import styles from "./HomeLayout.style"
 import Button from '../../../../components/Button'
 
-export default function HomeLayout({ userName, signOut, navigation, uservar, setUserVar }) {
+export default function HomeLayout({ userName, signOut, navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
@@ -16,9 +16,9 @@ export default function HomeLayout({ userName, signOut, navigation, uservar, set
                 </Text>
             </View>
 
-            <Button title="Go Activity" onPress={() => navigation.navigate("Activity")} />
+            <Button title="New Activity" onPress={() => navigation.navigate("NewActivity")} />
             <Button title="Go LeaderBoard" onPress={() => navigation.navigate("LeaderBoard")} />
-            <Button title="SignOut" onPress={() => setUserVar("oğuzhan")} />
+            <Button title="SignOut" onPress={() => signOut()} />
         </View>
     )
 }
