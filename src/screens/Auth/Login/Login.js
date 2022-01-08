@@ -7,9 +7,11 @@ import * as Yup from 'yup';
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import { useKeyboard } from "../../../hooks/KeyboardListen";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = ({ navigation }) => {
     const isKeyBoardOpen = useKeyboard();
+    const dispatch = useDispatch();
     const initialForm = {
         usermail: "",
         password: ""
@@ -25,7 +27,7 @@ const Login = ({ navigation }) => {
     const handleLogin = async (formValues) => {
         try {
             await auth().signInWithEmailAndPassword(formValues.usermail, formValues.password)
-            //navigation.navigate("ChatRooms")
+            dispatch({ type: "SET_USER", payload: true });
         } catch (error) {
             console.log(error)
             Alert.alert(
@@ -68,12 +70,10 @@ const Login = ({ navigation }) => {
                         {touched.password && errors.password &&
                             <Text style={styles.warn}>{errors.password}</Text>
                         }
-
                         <View style={styles.buttonContainer}>
                             <Button testID="signin-button" title="Giriş Yap" onPress={handleSubmit} disabled={isValid} />
                             <Button testID="signup-button" title="Kayıt Ol" onPress={() => navigation.navigate("Sign")} disabled={false} theme="secondary" />
                         </View>
-
                     </View>
                 )}
             </Formik>

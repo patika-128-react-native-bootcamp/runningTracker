@@ -18,6 +18,7 @@ export default function Activity() {
     const [currentLocation, setCurrentLocation] = useState({
         latitude: 0,
         longitude: 0,
+        time: 0
     });
     const [allData, setAllData] = useState({
         allCoords: [],
@@ -29,12 +30,13 @@ export default function Activity() {
     const [loading, setLoading] = useState(true);
     const [status, setStatus] = useState(false);
 
-    const getPosition = () => {
+    const getPosition = (t) => {
         Geolocation.getCurrentPosition(
             (c) => {
                 setCurrentLocation({
                     latitude: c.coords.latitude,
                     longitude: c.coords.longitude,
+                    time: t
                 });
 
             },
@@ -47,31 +49,37 @@ export default function Activity() {
             }
         );
     }
+    console.log("current", currentLocation)
+    //used for starting timer
     const handleStart = () => {
         if (!status) {
             timerRef.current.start();
             setStatus(true)
         }
     };
+    // used to finish timer
     const handleFinish = () => {
         if (status) {
             timerRef.current.stop();
             setStatus(false)
         }
     }
+    // works when timer finished
     const handleEnd = (t) => {
         setAllData({
             ...allData,
-            time: t
+            time: t,
         })
     }
+    //works every second
     const handleTimer = (t) => {
-        console.log(t)
         if (t % 5 == 0) {
-            getPosition()
+            getPosition(t)
         }
     };
+    console.log("console", allData)
 
+    //first coordinates taken
     useEffect(() => {
         Geolocation.getCurrentPosition(
             (c) => {
@@ -81,11 +89,13 @@ export default function Activity() {
                         longitude: c.coords.longitude,
                     }],
                     distance: 0,
-                    time: 0
+                    time: 0,
+                    speed: 0
                 })
                 setCurrentLocation({
                     latitude: c.coords.latitude,
                     longitude: c.coords.longitude,
+                    time: 0
                 })
 
                 // const {
@@ -102,22 +112,28 @@ export default function Activity() {
         );
     }, []);
 
+    // when current location taken set this into allData with useEffect, I used this way beacause when I set it in geolocation function, I get some errors
     useEffect(() => {
         const length = allData.allCoords.length - 1
-        if (currentLocation.latitude != 0 && currentLocation.latitude != allData.allCoords[length].latitude) {
+        const speed = allData.time > 0 ? allData.distance / allData.time : 0
+
+        console.log(length)
+        if (length > -1) {
             setAllData({
-                allCoords: [...allData.allCoords, currentLocation],
+                allCoords: [...allData.allCoords, {
+                    latitude: currentLocation.latitude,
+                    longitude: currentLocation.longitude,
+                }],
                 distance: allData.distance + countDistance(allData.allCoords[length].latitude, allData.allCoords[length].longitude, currentLocation.latitude, currentLocation.longitude),
-                time: 0
+                time: currentLocation.time,
+                speed: speed
             })
         }
     }, [currentLocation])
 
-
     if (loading) {
         return <ActivityIndicator />
     };
-
 
     return (
         <ActivityLayout

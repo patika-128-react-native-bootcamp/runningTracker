@@ -28,14 +28,16 @@ const Sign = ({ navigation }) => {
         usermail: Yup.string().email('Invalid email').required('Required'),
     });
 
-    const handleSign = async (formValues) => {
+    const handleSignUp = async (formValues) => {
         try {
             await auth().createUserWithEmailAndPassword(formValues.usermail, formValues.password)
             const update = {
                 displayName: formValues.username,
             };
-            //await auth().signInWithEmailAndPassword(formValues.usermail, formValues.password)
+
             await auth().currentUser.updateProfile(update);
+
+            navigation.navigate("Login")
         } catch (error) {
             console.log(error)
             Alert.alert(
@@ -47,15 +49,11 @@ const Sign = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            {/* <Image
-                style={styles.image}
-                source={require('../../assets/chat3.png')}
-                resizeMode="contain"
-            /> */}
+
             <Text style={[styles.header, isKeyBoardOpen ? { marginTop: 5 } : { marginTop: 50 }]}>Running Tracker</Text>
             <Formik
                 initialValues={initialForm}
-                onSubmit={values => handleSign(values)}
+                onSubmit={values => handleSignUp(values)}
                 validationSchema={SignupSchema}
             >
                 {({ handleSubmit, values, handleChange, errors, touched, isValid, setFieldTouched }) => (
