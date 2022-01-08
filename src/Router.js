@@ -12,29 +12,29 @@ import NewActivity from './screens/Activities/NewActivity';
 import Home from './screens/Activities/Home';
 import LeaderBoard from './screens/Activities/LeaderBoard';
 
-import auth from "@react-native-firebase/auth"
-
-import SplashScreen from 'react-native-splash-screen'
-
+import { useDispatch, useSelector } from "react-redux"
 
 const Stack = createNativeStackNavigator();
 
 function App() {
-    const [user, setUser] = React.useState(false);
+   
+    const user = useSelector(s => s.user);
 
     React.useEffect(() => {
-        auth().onAuthStateChanged(users => {
+        // auth().onAuthStateChanged(users => {
            
-                if (users) {
-                    console.log("user var")
-                    setUser(true)
-                    SplashScreen.hide();
-                } else {
-                    console.log("yok")
-                    setUser(false)
-                    SplashScreen.hide();
-                }
-        })
+        //         if (users) {
+        //             console.log("user var")
+        //             setUser(true)
+        //             SplashScreen.hide();
+        //         } else {
+        //             console.log("yok")
+        //             setUser(false)
+        //             SplashScreen.hide();
+
+        //         }
+        // })
+        
     }, [])
 
 
