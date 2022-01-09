@@ -4,7 +4,7 @@ import { View, Text } from 'react-native'
 import styles from "./HomeLayout.style"
 import Button from '../../../../components/Button'
 
-export default function HomeLayout({ userName, signOut, navigation }) {
+export default function HomeLayout({ userName, signOut, navigation, userData }) {
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
@@ -14,9 +14,16 @@ export default function HomeLayout({ userName, signOut, navigation }) {
                 <Text style={styles.title}>
                     {userName.displayName}
                 </Text>
+                <Text style={styles.title}>
+                    Total Distance: {userData.totalDistance}
+                </Text>
+                <Text style={styles.title}>
+                    Total Time: {userData.totalTime}
+                </Text>
+
             </View>
 
-            <Button title="New Activity" onPress={() => navigation.navigate("NewActivity")} />
+            <Button title="New Activity" onPress={() => navigation.navigate("NewActivity", userData)} />
             <Button title="Go LeaderBoard" onPress={() => navigation.navigate("LeaderBoard")} />
             <Button title="SignOut" onPress={() => signOut()} />
         </View>

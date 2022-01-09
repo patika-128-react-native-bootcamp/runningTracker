@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import { useKeyboard } from "../../../hooks/KeyboardListen";
-
+import firestore from "@react-native-firebase/firestore"
 
 
 const Sign = ({ navigation }) => {
@@ -36,13 +36,21 @@ const Sign = ({ navigation }) => {
             };
 
             await auth().currentUser.updateProfile(update);
+            console.log(auth().currentUser)
 
+            await firestore().collection("users").doc(auth().currentUser.uid).set({
+                userName: formValues.username,
+                totalDistance: 0,
+                totalTime: 0,
+                activities: []
+
+            })
             navigation.navigate("Login")
         } catch (error) {
             console.log(error)
             Alert.alert(
                 "Alert",
-                "Sign Up Failed"
+                `${error}`
             );
         }
     }
