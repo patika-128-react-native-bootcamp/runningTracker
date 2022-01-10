@@ -5,6 +5,7 @@ import styles from "./HomeLayout.style"
 import Button from '../../../../components/Button'
 
 export default function HomeLayout({ userName, signOut, navigation, userData }) {
+    console.log("homelayout", userData)
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
@@ -15,7 +16,7 @@ export default function HomeLayout({ userName, signOut, navigation, userData }) 
                     {userName.displayName}
                 </Text>
                 <Text style={styles.title}>
-                    Total Distance: {userData.totalDistance}
+                    Total Distance: {userData.totalDistance.toFixed(2)} km
                 </Text>
                 <Text style={styles.title}>
                     Total Time: {userData.totalTime}
@@ -25,6 +26,7 @@ export default function HomeLayout({ userName, signOut, navigation, userData }) 
 
             <Button title="New Activity" onPress={() => navigation.navigate("NewActivity", userData)} />
             <Button title="Go LeaderBoard" onPress={() => navigation.navigate("LeaderBoard")} />
+            <Button title="Go History" onPress={() => navigation.navigate("History", userData)} />
             <Button title="SignOut" onPress={() => signOut()} />
         </View>
     )

@@ -50,6 +50,7 @@ export default function Home({ navigation }) {
             signOut={handleSignOut}
             navigation={navigation}
             userData={userData}
+
         />
     )
 }
