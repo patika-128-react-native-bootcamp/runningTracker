@@ -5,7 +5,7 @@ import styles from "./HomeLayout.style"
 import Button from '../../../../components/Button'
 
 export default function HomeLayout({ userName, signOut, navigation, userData }) {
-    console.log("homelayout", userData)
+
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>

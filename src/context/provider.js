@@ -13,11 +13,11 @@ const Provide = ({ children }) => {
     useEffect(() => {
         AsyncStorage.getItem("@USER").then(user => {
             if (user) {
-                console.log("user var")
+
                 setUser(true)
 
             } else {
-                console.log("yok")
+
                 setUser(false)
 
             }

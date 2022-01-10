@@ -6,7 +6,7 @@ import uuid from 'react-native-uuid';
 
 export default function HistoryLayout({ userData, navigation }) {
     const sortedData = userData.activities.sort((a, b) => a.date < b.date)
-    console.log("sortedData", sortedData)
+
     const renderItem = ({ item, index }) => (<HistoryCard data={item} navigation={navigation} index={index} />)
     return (
         <View style={styles.container}>

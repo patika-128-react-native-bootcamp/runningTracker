@@ -21,25 +21,6 @@ function App() {
    
     const user = useSelector(s => s.user);
 
-    React.useEffect(() => {
-        // auth().onAuthStateChanged(users => {
-           
-        //         if (users) {
-        //             console.log("user var")
-        //             setUser(true)
-        //             SplashScreen.hide();
-        //         } else {
-        //             console.log("yok")
-        //             setUser(false)
-        //             SplashScreen.hide();
-
-        //         }
-        // })
-        
-    }, [])
-
-
-
     return (
         <NavigationContainer>
 

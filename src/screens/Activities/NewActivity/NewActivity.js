@@ -104,7 +104,6 @@ export default function Activity({ navigation, route }) {
         }
     };
 
-    console.log("allData", allData)
     const fetchWeatherData = async (latitude, longitude) => {
         try {
             const { data } = await axios.get(`${base}lat=${latitude}&lon=${longitude}&appid=${key}&units=metric`);
@@ -170,7 +169,7 @@ export default function Activity({ navigation, route }) {
         );
     }, []);
 
-    console.log("weatherData", weatherData)
+
     if (loading) {
         return <ActivityIndicator />
     };

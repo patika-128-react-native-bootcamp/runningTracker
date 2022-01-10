@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import styles from "./LeaderBoardCard.style"
 
 export default function LeaderBoardCard({ data, index }) {
-    console.log("LeaderBoardCard", data)
+
     return (
         <View style={styles.container}>
 

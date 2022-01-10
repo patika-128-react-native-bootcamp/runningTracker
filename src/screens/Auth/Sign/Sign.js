@@ -36,7 +36,7 @@ const Sign = ({ navigation }) => {
             };
 
             await auth().currentUser.updateProfile(update);
-            console.log(auth().currentUser)
+
 
             await firestore().collection("users").doc(auth().currentUser.uid).set({
                 userName: formValues.username,
@@ -47,7 +47,7 @@ const Sign = ({ navigation }) => {
             })
             navigation.navigate("Login")
         } catch (error) {
-            console.log(error)
+
             Alert.alert(
                 "Alert",
                 `${error}`
@@ -112,24 +112,3 @@ export default Sign;
 
 
 
-
-// const signIn = () => {
-//     auth()
-//         .signInWithEmailAndPassword('jane.doe@example.com', 'SuperSecretPassword!')
-//         .then((res) => {
-//             //console.log(res);
-//         })
-//         .catch(error => {
-//             console.error(error);
-//         });
-// }
-// const signOut = () => {
-//     auth()
-//         .signOut()
-//         .then((res) => {
-//             //console.log(res);
-//         })
-//         .catch(error => {
-//             console.error(error);
-//         });
-// };

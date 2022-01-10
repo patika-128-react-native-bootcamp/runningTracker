@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import styles from "./HistoryCard.style"
 
 export default function HistoryCard({ data, navigation, index }) {
-    console.log("historycard", data)
+
     return (
         <TouchableOpacity
             onPress={() => navigation.navigate("ActivityDetail", data)}

@@ -29,7 +29,7 @@ const Login = ({ navigation }) => {
             await auth().signInWithEmailAndPassword(formValues.usermail, formValues.password)
             dispatch({ type: "SET_USER", payload: true });
         } catch (error) {
-            console.log(error)
+
             Alert.alert(
                 "Alert",
                 "Sign In Failed"
@@ -86,24 +86,3 @@ export default Login;
 
 
 
-
-// const signIn = () => {
-//     auth()
-//         .signInWithEmailAndPassword('jane.doe@example.com', 'SuperSecretPassword!')
-//         .then((res) => {
-//             //console.log(res);
-//         })
-//         .catch(error => {
-//             console.error(error);
-//         });
-// }
-// const signOut = () => {
-//     auth()
-//         .signOut()
-//         .then((res) => {
-//             //console.log(res);
-//         })
-//         .catch(error => {
-//             console.error(error);
-//         });
-// };

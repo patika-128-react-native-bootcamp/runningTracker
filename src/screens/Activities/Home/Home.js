@@ -9,7 +9,7 @@ import { ActivityIndicator } from 'react-native';
 export default function Home({ navigation }) {
 
     const user = auth().currentUser;
-    console.log("user", user)
+
     const dispatch = useDispatch();
 
     const [userData, setUserData] = useState()
@@ -31,15 +31,7 @@ export default function Home({ navigation }) {
         })
     }, [])
 
-    // const onSend = (m = []) => {
 
-    //     firestore().doc("chatrooms/" + roomId).set({
-    //         messages: GiftedChat.append(messages, m)
-    //     }, {
-    //         merge: true
-    //     })
-    //     console.log(messages)
-    // }
     if (loading) {
         return <ActivityIndicator />
     }
