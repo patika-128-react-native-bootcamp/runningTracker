@@ -6,7 +6,7 @@
 <img src="video1.gif" width="250px" height="500px" alt=""/>
 <img src="video2.gif" width="250px" height="500px" alt=""/>
 <img src="video3.gif" width="250px" height="500px" alt=""/>
-<img src="video3.gif" width="250px" height="500px" alt=""/>
+<img src="video4.gif" width="250px" height="500px" alt=""/>
   </div>
 
 # Setup
